@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>sample</title>
+  <script src="https://unpkg.com/vue"></script>
+  <style>
+    body {
+      margin: 30px;
+    }
+  </style>
+</head>
+<body>
+<h1>Hello Vue !!</h1>
+<div id="app">
+  <!--表示非表示切り替え-->
+  <div v-show="showFlg">
+    <p>DOMに存在する</p>
+  </div>
+
+  <!--条件分岐-->
+  <div v-if="showFlg">
+    <p>showFlgが {{ showFlg }}</p>
+  </div>
+  <div v-else>
+    <p>showFlgが {{ showFlg }}</p>
+  </div>
+
+  <!--
+  イベント
+  v-on:イベント名="処理"
+  省略形
+  @イベント名="処理"
+  -->
+  <button v-on:click="showHide">表示非表示</button>
+
+  <!--リスト表示-->
+  <h2>array</h2>
+  <ul v-for="( item, index ) in array">
+    <li>
+      {{ index }} : {{ item }}
+    </li>
+  </ul>
+
+  <h2>object</h2>
+  <ul v-for="( val, key, index ) in object">
+    <li>
+      {{ index }} : {{ key }} - {{ val }}
+    </li>
+  </ul>
+
+  <h2>number</h2>
+  <ul v-for="( num, index ) in number">
+    <li>
+      {{ index }} : {{ num }}
+    </li>
+  </ul>
+
+  <h2>string</h2>
+  <ul v-for="( char, index) in string">
+    <li>
+      {{ index }} : {{ char }}
+    </li>
+  </ul>
+
+  <h2>Event</h2>
+  <button @click="increment">increment</button>
+  <div> {{ count }}</div>
+
+  <h2>双方向データバインディング</h2>
+
+  <h3>input</h3>
+  <input v-model="text">
+  <div>{{ text }}</div>
+
+  <h3>checkbox</h3>
+  <input type="checkbox" id="checkbox" v-model="checked">
+  <label for="checkbox">{{ checked }}</label>
+  <br>
+  <input type="checkbox" id="check1" value="check1" v-model="checkedNames">
+  <label for="check1">check1</label>
+  <input type="checkbox" id="check2" value="check2" v-model="checkedNames">
+  <label for="check2">check1</label>
+  <input type="checkbox" id="check3" value="check3" v-model="checkedNames">
+  <label for="check3">check1</label>
+  <br>
+  <span> {{ checkedNames }}</span>
+
+  <h3>radio</h3>
+  <input type="radio" id="AM" value="AM" v-model="time">
+  <label for="AM">AM</label>
+  <input type="radio" id="PM" value="PM" v-model="time">
+  <label for="PM">PM</label>
+  <br>
+  <div>{{ time }} 9:00 </div>
+
+  <h3>select</h3>
+  <select v-model="select">
+    <option disabled value="">選んでね</option>
+    <option>選択1</option>
+    <option>選択2</option>
+    <option>選択3</option>
+  </select>
+  <div>{{ select }}</div>
+</div>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      showFlg: true,
+      array: ['item1', 'item2', 'item3', 'item4'],
+      object: {
+        'hoge': 'hogehoge',
+        'fuga': 'fugafuga'
+      },
+      number: 10,
+      string: 'string',
+      count: 0,
+      text: 'text',
+      checked: false,
+      checkedNames: [],
+      time: 'AM',
+      select: ''
+    },
+    methods: {
+      showHide: function () {
+        this.showFlg = !this.showFlg;
+      },
+      increment: function () {
+        this.count++;
+      }
+    }
+  });
+</script>
+</body>
+</html>
