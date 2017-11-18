@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://unpkg.com/vue"></script>
+  <style>
+    .completed {
+      text-decoration: line-through;
+    }
+    button {
+      width: 50px;
+      color: #fff;
+      padding: 0;
+      text-align: center;
+      cursor: pointer;
+      background-color: #6dd2e9;
+      border: 1px solid rgba(0,0,0,0.3);
+      box-shadow: rgba(255,255,255,0.4) 0 1px 0 inset;
+      border-radius: 3px;
+      margin-left: 20px;
+    }
+    input[type="text"] {
+      box-sizing: border-box;
+      width: 200px;
+      line-height: 20px;
+      color: #fff;
+      background-color: #00bcd4;
+      border: 2px solid #2196f3;
+      margin-bottom: 8px;
+      padding: 0 5px;
+      outline: none;
+      border-radius: 2px;
+      -webkit-appearance: none;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <form v-on:submit.prevent="addTodo">
+    <input type="text" v-model="title">
+    <button type="submit">追加</button>
+  </form>
+  <ul v-for="todo in todoList">
+    <li v-bind:class="{ completed: todo.completed }">
+      <label>
+        <input type="checkbox" v-model="todo.completed">
+        {{ todo.title }}
+        <button v-if="todo.completed" v-on:click="removeTodo(todo)">削除</button>
+      </label>
+    </li>
+  </ul>
+</div>
+<script>
+  var app = new Vue({
+    el: '#app',
+    data: {
+      title: '',
+      todoList: [
+        { title: 'ミーティング', completed: true },
+        { title: '勉強会', completed: false }
+      ]
+    },
+    methods: {
+      addTodo: function () {
+        if(this.title === '') return;
+        const todo = {
+          title: this.title,
+          completed: false
+        };
+        this.todoList.unshift(todo);
+        this.title = '';
+      },
+      removeTodo: function (todo) {
+        this.todoList.splice(this.todoList.indexOf(todo), 1);
+      }
+    }
+  });
+</script>
+</body>
+</html>
